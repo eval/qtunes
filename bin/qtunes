@@ -1,3 +1,24 @@
 #!/usr/bin/env ruby
 
+require "rubygems"
 require "qtunes"
+require "thor"
+
+class QtunesCLI < Thor
+  include Thor::Actions
+
+  map 's' => :server
+  desc 'server', 'Serve Qtunes frontend'
+  def server
+    puts "== Starting Qtunes server"
+    Qtunes::Server.run!
+  end
+
+  map '-v' => :version
+  desc 'version', 'Display installed Qtunes version'
+  def version
+    puts "Qtunes #{Qtunes::VERSION}"
+  end
+end
+
+QtunesCLI.start

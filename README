@@ -1,0 +1,5 @@
+qtunes let's you control the queue of a local cmus-player.
+It has a webinterface to let you select what songs to enqueue.
+
+# start server
+$> qtunes s[erver]

@@ -1,5 +1,5 @@
 require "qtunes/version"
+require "qtunes/server"
 
 module Qtunes
-  # Your code goes here...
 end
