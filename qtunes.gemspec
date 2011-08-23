@@ -23,4 +23,5 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "sinatra"
   s.add_runtime_dependency "thor"
   s.add_runtime_dependency "cocaine"
+  s.add_runtime_dependency "ruby-audioinfo"
 end

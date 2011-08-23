@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'digest/sha2'
+require 'audioinfo'
 
 module Qtunes
   class Server < Sinatra::Base
@@ -24,7 +25,7 @@ module Qtunes
     end
 
     get '/add/:id' do
-      PLAYER.enqueue(library[params[:id]])
+      PLAYER.enqueue(library[params[:id]][:path])
 
       redirect '/'
     end
@@ -49,11 +50,27 @@ module Qtunes
 
     protected
       def queue
-        PLAYER.queue.inject({}){|res,file| res[song_id(file)]=file; res}
+        PLAYER.queue.inject({}) do |res,path|
+          begin
+            song = {:path => path}.merge(AudioInfo.open(path).to_h)
+          rescue AudioInfoError
+            next res
+          end
+          res[song_id(path)] = song
+          res
+        end
       end
 
       def library
-        @library ||= PLAYER.library.inject({}){|res,file| res[song_id(file)]=file; res}
+        @library ||= PLAYER.library.inject({}) do |res,path|
+          begin
+            song = {:path => path}.merge(AudioInfo.open(path).to_h)
+          rescue AudioInfoError
+            next res
+          end
+          res[song_id(path)] = song
+          res
+        end
       end
 
       def song_id(file)

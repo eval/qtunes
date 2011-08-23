@@ -1,6 +1,6 @@
 <p>Now playing: '<%= @song %>'</p>
 
-<% @songs.each do |id, path| %>
+<% @songs.each do |id, song| %>
   <div class="song">
     <span class="controls">
       <% if queue[id] %>
@@ -12,14 +12,14 @@
 
 
     <span class="artist">
-      <a href="/artist/{{artist_name}}"><%= path %></a>
+      <a href="/artist/{{artist_name}}"><%= song['artist'] %></a>
     </span>
 
     <span class="title">
-      <a href="/song/{{id}}">title</a>
+      <a href="/song/{{id}}"><%= song['title'] %></a>
     </span>
     <span class="album">
-      <a href="/artist/{{artist_name}}/album/{{album_name}}">{{album_name}}</a>
+      <a href="/artist/{{artist_name}}/album/{{album_name}}"><%= song['album'] %></a>
     </span>
   </div>
 <% end %>
