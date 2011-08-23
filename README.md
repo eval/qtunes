@@ -7,7 +7,8 @@ Requirements
 ------------
 
 - [cmus](http://cmus.sourceforge.net/)
-  OSX: `brew install cmus`
+    
+    OSX: `brew install cmus`
 
 Installation
 ------------
