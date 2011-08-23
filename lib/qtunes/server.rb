@@ -61,8 +61,10 @@ module Qtunes
 
     def self.library
       @library ||= begin
-        puts "Loading library"
-        songs_to_hash{ player.library }
+        print "Loading library..."
+        result = songs_to_hash{ player.library }
+        puts "Done"
+        result
       end
     end
 
