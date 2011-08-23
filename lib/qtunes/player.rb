@@ -37,6 +37,18 @@ module Qtunes
       execute('view queue')
     end
 
+    def win_top
+      execute('win-top')
+    end
+
+    def win_down
+      execute('win-down')
+    end
+
+    def win_remove
+      execute('win-remove')
+    end
+
     def play
       execute('player-play')
     end

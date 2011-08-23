@@ -30,7 +30,14 @@ module Qtunes
     end
 
     get '/remove/:id' do
-      PLAYER.enqueue(library[params[:id]])
+      ix = library.keys.index(params[:id])
+
+      # badass!
+      PLAYER.view_queue
+      PLAYER.win_top
+      ix.times{ PLAYER.win_down }
+      PLAYER.win_remove
+      
       redirect '/'
     end
 
@@ -42,11 +49,15 @@ module Qtunes
 
     protected
       def queue
-        PLAYER.queue.inject({}){|res,file| res[Digest::SHA256.hexdigest(file)[0,10]]=file; res}
+        PLAYER.queue.inject({}){|res,file| res[song_id(file)]=file; res}
       end
 
       def library
-        @library ||= PLAYER.library.inject({}){|res,file| res[Digest::SHA256.hexdigest(file)[0,10]]=file; res}
+        @library ||= PLAYER.library.inject({}){|res,file| res[song_id(file)]=file; res}
+      end
+
+      def song_id(file)
+        Digest::SHA256.hexdigest(file)[0,10]
       end
   end
 end
