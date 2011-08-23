@@ -49,8 +49,8 @@ module Qtunes
     end
 
     protected
-      def queue
-        PLAYER.queue.inject({}) do |res,path|
+      def songs_to_hash
+        yield.inject({}) do |res,path|
           begin
             song = {:path => path}.merge(AudioInfo.open(path).to_h)
           rescue AudioInfoError
@@ -61,16 +61,12 @@ module Qtunes
         end
       end
 
+      def queue
+        songs_to_hash{ PLAYER.queue }
+      end
+
       def library
-        @library ||= PLAYER.library.inject({}) do |res,path|
-          begin
-            song = {:path => path}.merge(AudioInfo.open(path).to_h)
-          rescue AudioInfoError
-            next res
-          end
-          res[song_id(path)] = song
-          res
-        end
+        @library ||= songs_to_hash{ PLAYER.library }
       end
 
       def song_id(file)
