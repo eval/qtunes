@@ -48,8 +48,16 @@ module Qtunes
       PLAYER = Qtunes::Player.new
     end
 
+    def self.queue
+      songs_to_hash{ PLAYER.queue }
+    end
+
+    def self.library
+      @library ||= songs_to_hash{ PLAYER.library }
+    end
+
     protected
-      def songs_to_hash
+      def self.songs_to_hash
         yield.inject({}) do |res,path|
           begin
             song = {:path => path}.merge(AudioInfo.open(path).to_h)
@@ -61,15 +69,7 @@ module Qtunes
         end
       end
 
-      def queue
-        songs_to_hash{ PLAYER.queue }
-      end
-
-      def library
-        @library ||= songs_to_hash{ PLAYER.library }
-      end
-
-      def song_id(file)
+      def self.song_id(file)
         Digest::SHA256.hexdigest(file)[0,10]
       end
   end
