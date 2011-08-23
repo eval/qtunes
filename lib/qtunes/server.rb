@@ -52,8 +52,16 @@ module Qtunes
       songs_to_hash{ PLAYER.queue }
     end
 
+    def queue
+      self.class.queue
+    end
+
     def self.library
       @library ||= songs_to_hash{ PLAYER.library }
+    end
+
+    def library
+      self.class.library
     end
 
     protected
