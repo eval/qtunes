@@ -1,0 +1,31 @@
+<p>Now playing: '<%= @song %>'</p>
+
+<% @songs.each do |id, path| %>
+  <div class="song">
+    <span class="controls">
+      <% if queue[id] %>
+      <a href="/remove/<%= id %>" title="remove from queue">-</a>
+      <% else %>
+      <a href="/add/<%= id %>" title="add to queue">+</a>
+      <% end %>
+    </span>
+
+
+    <span class="artist">
+      <a href="/artist/{{artist_name}}"><%= path %></a>
+    </span>
+
+    <span class="title">
+      <a href="/song/{{id}}">title</a>
+    </span>
+    <span class="album">
+      <a href="/artist/{{artist_name}}/album/{{album_name}}">{{album_name}}</a>
+    </span>
+  </div>
+<% end %>
+
+<% if @songs.empty? %>
+  <div class="content">
+    The queue is empty. Quick, play some <a href="/artist/Ace+of+Base">Ace of Base</a>; no one's looking.
+  </div>
+<% end %>

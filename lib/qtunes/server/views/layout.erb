@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Qtunes</title>
+  <link rel="stylesheet" href="/base.css" type="text/css" />
+</head>
+
+<body>
+  <h1>Title</h1>
+
+  <div class="navigation">
+    <form method="get" action="/search">
+      <input type="search" name="q" />
+    </form>
+
+    <a href="/">Queue</a>
+    <a href="/library">Library</a>
+  </div>
+
+  <%= yield %>
+</body>
+</html>
