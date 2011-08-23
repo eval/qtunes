@@ -1,4 +1,0 @@
-Qtunes let's you control the queue of a local cmus-player via a web-interface.
-
-# start server
-$> qtunes s[erver]
