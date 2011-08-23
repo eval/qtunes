@@ -11,21 +11,22 @@ module Qtunes
     set :static, true
 
     get '/' do
-      @song = PLAYER.file
+      @song = player.file
       @songs = queue
 
       erb :songs
     end
     
     get '/library' do
-      @song = PLAYER.file
+      @song = player.file
       @songs = library
 
       erb :songs
     end
 
     get '/add/:id' do
-      PLAYER.enqueue(library[params[:id]][:path])
+      player.enqueue(library[params[:id]][:path])
+      player.play if not player.playing?
 
       redirect '/'
     end
@@ -34,22 +35,24 @@ module Qtunes
       ix = library.keys.index(params[:id])
 
       # badass!
-      PLAYER.view_queue
-      PLAYER.win_top
-      ix.times{ PLAYER.win_down }
-      PLAYER.win_remove
+      player.view_queue
+      player.win_top
+      ix.times{ player.win_down }
+      player.win_remove
       
       redirect '/'
     end
 
-    configure do
-      puts "Configure"
+    def self.player
+      @player ||= Qtunes::Player.new
+    end
 
-      PLAYER = Qtunes::Player.new
+    def player
+      self.class.player
     end
 
     def self.queue
-      songs_to_hash{ PLAYER.queue }
+      songs_to_hash{ player.queue }
     end
 
     def queue
@@ -57,7 +60,10 @@ module Qtunes
     end
 
     def self.library
-      @library ||= songs_to_hash{ PLAYER.library }
+      @library ||= begin
+        puts "Loading library"
+        songs_to_hash{ player.library }
+      end
     end
 
     def library
@@ -80,5 +86,11 @@ module Qtunes
       def self.song_id(file)
         Digest::SHA256.hexdigest(file)[0,10]
       end
+
+    configure do
+      puts "Configure"
+
+      Qtunes::Server.library
+    end
   end
 end

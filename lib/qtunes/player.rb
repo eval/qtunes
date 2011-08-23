@@ -29,6 +29,18 @@ module Qtunes
       info['status']
     end
 
+    def playing?
+      status == 'playing'
+    end
+
+    def stopped?
+      status == 'stopped'
+    end
+
+    def paused?
+      status == 'paused'
+    end
+
     def file
       info['file']
     end
