@@ -1,4 +1,4 @@
-<p>Now playing: '<%= @song %>'</p>
+<h3>Now playing: '<%= @song %>'</h3>
 
 <% if @page %>
   <a href="?page=<%= @page - 1 %>">Previous</a>
@@ -15,16 +15,15 @@
       <% end %>
     </span>
 
-    <span class="artist">
-      <a href="/artist/{{artist_name}}"><%= song['artist'] %></a>
-    </span>
+    <span class="artist"><%= song['artist'] %></span>
+    <span class="title"><%= song['title'] %></span>
+    <span class="album"><%= song['album'] %></span>
+  </div>
+<% end %>
 
-    <span class="title">
-      <a href="/song/{{id}}"><%= song['title'] %></a>
-    </span>
-    <span class="album">
-      <a href="/artist/{{artist_name}}/album/{{album_name}}"><%= song['album'] %></a>
-    </span>
+<% if @songs.empty? %>
+  <div class="content">
+    The queue is empty. Quick, play some <a href="/artist/Ace+of+Base">Ace of Base</a>; no one's looking.
   </div>
 <% end %>
 
@@ -33,8 +32,3 @@
   <a href="?page=<%= @page + 1 %>">Next</a>
 <% end %>
 
-<% if @songs.empty? %>
-  <div class="content">
-    The queue is empty. Quick, play some <a href="/artist/Ace+of+Base">Ace of Base</a>; no one's looking.
-  </div>
-<% end %>
