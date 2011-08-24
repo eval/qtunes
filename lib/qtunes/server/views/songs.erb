@@ -1,15 +1,19 @@
 <p>Now playing: '<%= @song %>'</p>
 
-<% @songs.each do |id, song| %>
+<% if @page %>
+  <a href="?page=<%= @page - 1 %>">Previous</a>
+  <a href="?page=<%= @page + 1 %>">Next</a>
+<% end %>
+
+<% @songs.each do |song| %>
   <div class="song">
     <span class="controls">
-      <% if queue[id] %>
-      <a href="/remove/<%= id %>" title="remove from queue">-</a>
+      <% if queue[song['id']] %>
+      <a href="/remove/<%= song['id'] %>" title="remove from queue">-</a>
       <% else %>
-      <a href="/add/<%= id %>" title="add to queue">+</a>
+      <a href="/add/<%= song['id'] %>" title="add to queue">+</a>
       <% end %>
     </span>
-
 
     <span class="artist">
       <a href="/artist/{{artist_name}}"><%= song['artist'] %></a>
@@ -22,6 +26,11 @@
       <a href="/artist/{{artist_name}}/album/{{album_name}}"><%= song['album'] %></a>
     </span>
   </div>
+<% end %>
+
+<% if @page %>
+  <a href="?page=<%= @page - 1 %>">Previous</a>
+  <a href="?page=<%= @page + 1 %>">Next</a>
 <% end %>
 
 <% if @songs.empty? %>
