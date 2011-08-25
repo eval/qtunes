@@ -10,6 +10,7 @@ class QtunesCLI < Thor
   map 's' => :server
   desc 'server', 'Serve Qtunes frontend'
   def server
+    require 'qtunes/server'
     puts "== Starting Qtunes server"
     Qtunes::Server.run!
   end
