@@ -19,9 +19,10 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_development_dependency "shotgun"
-  s.add_runtime_dependency "sinatra"
-  s.add_runtime_dependency "rack-flash"
-  s.add_runtime_dependency "thor"
-  s.add_runtime_dependency "cocaine"
-  s.add_runtime_dependency "ruby-audioinfo"
+
+  s.add_runtime_dependency "sinatra", "~> 1.2.6"
+  s.add_runtime_dependency "rack-flash", "~> 0.1.2"
+  s.add_runtime_dependency "thor", "~> 0.14.6"
+  s.add_runtime_dependency "cocaine", "~> 0.2.0"
+  s.add_runtime_dependency "ruby-audioinfo", "~> 0.1.7"
 end
