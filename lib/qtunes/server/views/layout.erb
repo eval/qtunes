@@ -6,12 +6,19 @@
 </head>
 
 <body>
-  <h1>Qtunes</h1>
+  <h1><a href='/'>Qtunes</a></h1>
 
   <div class="navigation">
     <a href="/">Queue</a>
     <a href="/library">Library</a>
   </div>
+
+  <% if flash[:notice] %>
+    <p class="notice"><%= flash[:notice] %></p>
+  <% end %>
+  <% if flash[:error] %>
+    <p class="error"><%= flash[:error] %></p>
+  <% end %>
 
   <%= yield %>
 </body>

@@ -1,10 +1,14 @@
 require 'sinatra/base'
+require 'rack-flash'
 require 'digest/sha2'
 require 'audioinfo'
 require 'qtunes/paginatable'
 
 module Qtunes
   class Server < Sinatra::Base
+    enable :sessions
+    use Rack::Flash, :sweep => false
+
     dir = File.dirname(File.expand_path(__FILE__))
 
     set :views,  "#{dir}/server/views"
@@ -27,22 +31,22 @@ module Qtunes
     end
 
     get '/add/:id' do
-      player.enqueue(library[params[:id]]['path'])
+      player.enqueue(library[params[:id]]['path']) && flash[:notice] = "Song added"
       player.play if player.stopped?
 
-      redirect '/'
+      redirect back
     end
 
     get '/remove/:id' do
-      ix = library.keys.index(params[:id])
+      ix = queue.keys.index(params[:id])
 
       # badass!
       player.view_queue
       player.win_top
       ix.times{ player.win_down }
-      player.win_remove
-      
-      redirect '/'
+      player.win_remove && flash[:notice] = "Song removed"
+
+      redirect back
     end
 
     def self.player

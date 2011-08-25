@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "shotgun"
   s.add_runtime_dependency "sinatra"
+  s.add_runtime_dependency "rack-flash"
   s.add_runtime_dependency "thor"
   s.add_runtime_dependency "cocaine"
   s.add_runtime_dependency "ruby-audioinfo"
