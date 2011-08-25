@@ -1,30 +1,7 @@
 require 'sinatra/base'
 require 'digest/sha2'
 require 'audioinfo'
-
-module Paginatable
-  def self.included(base)
-    base.extend(ClassMethods)
-  end
-
-  def page(n)
-    slice(*[n - 1, 1].map{|i| i * self.per_page }) || []
-  end
-
-  def per_page
-    self.class.per_page
-  end
-
-  module ClassMethods
-    def per_page
-      10
-    end
-  end
-end
-
-class Array
-  include Paginatable
-end
+require 'qtunes/paginatable'
 
 module Qtunes
   class Server < Sinatra::Base
@@ -44,7 +21,7 @@ module Qtunes
     get '/library' do
       @page = params[:page] ? params[:page].to_i : 1
       @song = player.file
-      @songs = library.values.page(@page)
+      @songs = library.values.extend(Qtunes::Paginatable).page(@page)
 
       erb :songs
     end
