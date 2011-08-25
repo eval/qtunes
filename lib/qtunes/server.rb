@@ -1,3 +1,4 @@
+require 'qtunes'
 require 'sinatra/base'
 require 'rack-flash'
 require 'digest/sha2'
@@ -15,8 +16,11 @@ module Qtunes
     set :public, "#{dir}/server/public"
     set :static, true
 
+    before do
+      @current = self.class.song_to_hash(player.file)
+    end
+
     get '/' do
-      @song = player.file
       @songs = queue.values
 
       erb :songs
@@ -24,7 +28,6 @@ module Qtunes
     
     get '/library' do
       @page = params[:page] ? params[:page].to_i : 1
-      @song = player.file
       @songs = library.values.extend(Qtunes::Paginatable).page(@page)
 
       erb :songs
@@ -86,18 +89,23 @@ module Qtunes
     protected
       def self.songs_to_hash
         yield.inject({}) do |res,path|
-          begin
-            song = AudioInfo.open(path).to_h
-          rescue AudioInfoError
-            next res
-          end
-          res[song_id(path)] = song.merge('path' => path, 'id' => song_id(path))
+          res[song_id(path)] = song_to_hash(path)
           res
         end
       end
 
-      def self.song_id(file)
-        Digest::SHA256.hexdigest(file)[0,10]
+      def self.song_id(path)
+        Digest::SHA256.hexdigest(path)[0,10]
+      end
+
+      def self.song_to_hash(path)
+        result = {}
+        begin
+          result.merge!(AudioInfo.open(path).to_h)
+        rescue AudioInfoError
+        end
+        result.merge!('path' => path, 'id' => song_id(path))
+        result
       end
 
       def debug(object)

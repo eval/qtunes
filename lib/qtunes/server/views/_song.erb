@@ -1,0 +1,15 @@
+<div class="song <%= 'current' if defined?(current) %>">
+  <% if not defined?(current) %>
+    <span class="controls">
+      <% if queue[song['id']] %>
+        <a href="/remove/<%= song['id'] %>" title="remove from queue">-</a>
+      <% else %>
+        <a href="/add/<%= song['id'] %>" title="add to queue">+</a>
+      <% end %>
+    </span>
+  <% end %>
+
+  <span class="artist"><%= song['artist'] && !song['artist'].empty? ? song['artist'] : song['path'] %></span>
+  <span class="title"><%= song['title'] %></span>
+  <span class="album"><%= song['album'] %></span>
+</div>

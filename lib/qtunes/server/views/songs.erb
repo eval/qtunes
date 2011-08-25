@@ -1,29 +1,17 @@
-<h3>Now playing: '<%= @song %>'</h3>
+<%= erb :_song, {}, {:song => @current, :current => true} %>
 
 <% if @page %>
   <a href="?page=<%= @page - 1 %>">Previous</a>
   <a href="?page=<%= @page + 1 %>">Next</a>
 <% end %>
 
-<% @songs.each do |song| %>
-  <div class="song">
-    <span class="controls">
-      <% if queue[song['id']] %>
-      <a href="/remove/<%= song['id'] %>" title="remove from queue">-</a>
-      <% else %>
-      <a href="/add/<%= song['id'] %>" title="add to queue">+</a>
-      <% end %>
-    </span>
-
-    <span class="artist"><%= song['artist'] %></span>
-    <span class="title"><%= song['title'] %></span>
-    <span class="album"><%= song['album'] %></span>
-  </div>
+<% @songs.each_with_index do |song,ix| %>
+  <%= erb :_song, {}, {:song => song} %>
 <% end %>
 
 <% if @songs.empty? %>
   <div class="content">
-    No songs found!
+    No more songs found!
   </div>
 <% end %>
 
