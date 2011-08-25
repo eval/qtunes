@@ -8,12 +8,16 @@ module Paginatable
   end
 
   def page(n)
-    self[(n-1)*self.class.per_page...n*self.class.per_page] || []
+    slice(*[n - 1, 1].map{|i| i * self.per_page }) || []
+  end
+
+  def per_page
+    self.class.per_page
   end
 
   module ClassMethods
     def per_page
-      5
+      10
     end
   end
 end
