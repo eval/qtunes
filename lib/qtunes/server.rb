@@ -36,7 +36,7 @@ module Qtunes
 
     get '/' do
       @song = player.file
-      @songs = queue
+      @songs = queue.values
 
       erb :songs
     end
@@ -51,7 +51,7 @@ module Qtunes
 
     get '/add/:id' do
       player.enqueue(library[params[:id]]['path'])
-      player.play if not player.playing?
+      player.play if player.stopped?
 
       redirect '/'
     end
@@ -97,6 +97,11 @@ module Qtunes
       self.class.library
     end
 
+    helpers do
+      include Rack::Utils
+      alias_method :h, :escape_html
+    end
+
     protected
       def self.songs_to_hash
         yield.inject({}) do |res,path|
@@ -112,6 +117,16 @@ module Qtunes
 
       def self.song_id(file)
         Digest::SHA256.hexdigest(file)[0,10]
+      end
+
+      def debug(object)
+        begin
+          Marshal::dump(object)
+          "<pre class='debug_dump'>#{h(object.to_yaml).gsub("  ", "&nbsp; ")}</pre>"
+        rescue Exception => e  # errors from Marshal or YAML
+          # Object couldn't be dumped, perhaps because of singleton methods -- this is the fallback
+          "<code class='debug_dump'>#{h(object.inspect)}</code>"
+        end
       end
 
     configure do
