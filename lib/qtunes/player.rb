@@ -1,4 +1,5 @@
 require 'cocaine'
+require 'shellwords'
 
 module Qtunes
   class Player
@@ -82,7 +83,7 @@ module Qtunes
     end
 
     def enqueue(file)
-      Cocaine::CommandLine.new('cmus-remote', "-q '#{file}'").run
+      Cocaine::CommandLine.new('cmus-remote', "-q #{file.shellescape}").run
     end
 
     def queue
