@@ -17,7 +17,7 @@ module Qtunes
     set :static, true
 
     before do
-      @current = self.class.song_to_hash(player.file)
+      @current = self.class.song_to_hash(player.file) rescue {}
     end
 
     get '/' do
