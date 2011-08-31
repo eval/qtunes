@@ -1,4 +1,7 @@
-<div class="song <%= 'current' if defined?(current) %>">
+<% 
+  klasses = %w(song).tap{|a| a << 'current' if defined?(current) }
+%>
+<div class="<%= klasses.join(' ') %>">
   <% if not defined?(current) %>
     <span class="controls">
       <% if queue[song['id']] %>
