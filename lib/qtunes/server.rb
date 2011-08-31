@@ -35,8 +35,10 @@ module Qtunes
     end
     
     get '/library' do
-      @page = params[:page] ? params[:page].to_i : 1
-      @songs = library.values.extend(Qtunes::Paginatable).page(@page)
+      #@page = params[:page] ? params[:page].to_i : 1
+      @artist = params[:artist] || 'a'
+      #@songs = library.values.extend(Qtunes::Paginatable).page(@page)
+      @songs = library_by_first_letter_of_artist[@artist] || []
 
       erb :songs
     end
@@ -74,6 +76,20 @@ module Qtunes
 
     def queue
       self.class.queue
+    end
+
+    def self.library_by_first_letter_of_artist
+      @library_by_first_letter_of_artist ||= begin
+        library.values.inject({}) do |res,song| 
+          key = song['artist'] ? song['artist'][0,1].downcase : ''
+          (res[key] ||= []) << song
+          res
+        end
+      end
+    end
+
+    def library_by_first_letter_of_artist
+      self.class.library_by_first_letter_of_artist
     end
 
     def self.library

@@ -1,8 +1,12 @@
 <%= erb :_song, {}, {:song => @current, :current => true} %>
 
-<% if @page %>
-  <a href="?page=<%= @page - 1 %>">Previous</a>
-  <a href="?page=<%= @page + 1 %>">Next</a>
+
+<% ('a'..'z').each do |e| %>
+  <% if library_by_first_letter_of_artist[e] %>
+  <a href="?artist=<%= e %>" style='font-weight:bold;text-transform:uppercase'><%= e %></a>
+  <% else %>
+  <span><%= e %></span>
+  <% end %>
 <% end %>
 
 <% @songs.each_with_index do |song,ix| %>
@@ -14,9 +18,3 @@
     No more songs found!
   </div>
 <% end %>
-
-<% if @page %>
-  <a href="?page=<%= @page - 1 %>">Previous</a>
-  <a href="?page=<%= @page + 1 %>">Next</a>
-<% end %>
-
