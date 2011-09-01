@@ -19,6 +19,8 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_development_dependency "shotgun"
+  s.add_development_dependency "compass"
+  s.add_development_dependency "compass-susy-plugin"
 
   s.add_runtime_dependency "sinatra", "~> 1.2.6"
   s.add_runtime_dependency "rack-flash", "~> 0.1.2"

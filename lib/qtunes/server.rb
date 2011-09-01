@@ -4,6 +4,8 @@ require 'rack-flash'
 require 'digest/sha2'
 require 'audioinfo'
 require 'qtunes/paginatable'
+require 'compass'
+require 'susy'
 
 module Qtunes
   class Server < Sinatra::Base
@@ -18,6 +20,12 @@ module Qtunes
 
     before do
       @current = self.class.song_to_hash(player.file)
+    end
+
+    get '/screen.css' do
+      require 'susy'
+      content_type 'text/css', :charset => 'utf-8'
+      scss :screen
     end
 
     get '/' do
@@ -134,6 +142,12 @@ module Qtunes
 
     configure do
       puts "Configure"
+
+      Compass.configuration do |config|
+        config.project_path = dir
+        config.sass_dir = "#{dir}/server/views"
+      end
+      set :scss, Compass.sass_engine_options
 
       Qtunes::Server.library
     end
