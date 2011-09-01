@@ -36,9 +36,9 @@ module Qtunes
     
     get '/library' do
       #@page = params[:page] ? params[:page].to_i : 1
-      @artist = params[:artist] || 'a'
+      @page = params[:page] || 'a'
       #@songs = library.values.extend(Qtunes::Paginatable).page(@page)
-      @songs = library_by_first_letter_of_artist[@artist] || []
+      @songs = library_by_first_letter_of_artist[@page] || []
 
       erb :songs
     end

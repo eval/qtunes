@@ -1,0 +1,10 @@
+<div class='pagination'>
+<% ('a'..'z').each do |e| %>
+  <% if library_by_first_letter_of_artist.has_key?(e) %>
+    <a href="?page=<%= e %>"><%= e %></a>
+  <% else %>
+    <span><%= e %></span>
+  <% end %>
+<% end %>
+</div>
+<div class="clear"></div>

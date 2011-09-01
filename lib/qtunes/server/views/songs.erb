@@ -1,22 +1,14 @@
 <%= erb :_song, {}, {:song => @current, :current => true} %>
 
+<% if @songs.any? %>
+  <%= erb :_paginate_artists if @page %>
 
-<div class='pagination'>
-<% ('a'..'z').each do |e| %>
-  <% if library_by_first_letter_of_artist.has_key?(e) %>
-    <a href="?artist=<%= e %>"><%= e %></a>
-  <% else %>
-    <span><%= e %></span>
+  <% @songs.each_with_index do |song,ix| %>
+    <%= erb :_song, {}, {:song => song} %>
   <% end %>
-<% end %>
-</div>
-<div class="clear"></div>
 
-<% @songs.each_with_index do |song,ix| %>
-  <%= erb :_song, {}, {:song => song} %>
-<% end %>
-
-<% if @songs.empty? %>
+  <%= erb :_paginate_artists if @page %>
+<% else %>
   <div class="content">
     No more songs found!
   </div>
