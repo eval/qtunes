@@ -17,7 +17,7 @@ module Qtunes
     set :static, true
 
     before do
-      @current = self.class.song_to_hash(player.file) rescue {}
+      @current = self.class.song_to_hash(player.file)
     end
 
     get '/' do
@@ -98,8 +98,22 @@ module Qtunes
         Digest::SHA256.hexdigest(path)[0,10]
       end
 
+
+      # Get the information for a song.
+      #
+      # path  - String representing location of song
+      #
+      # Examples
+      #
+      #   song_to_hash '~/Music/song2.mp3'
+      #   # => {'path' => '~/Music/song2.mp3', 'id' => '12345', ...}
+      #
+      # Returns Hash with info of song or empty Hash in case path is nil.
       def self.song_to_hash(path)
         result = {}
+
+        return result if not path
+
         begin
           result.merge!(AudioInfo.open(path).to_h)
         rescue AudioInfoError
