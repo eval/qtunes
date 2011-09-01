@@ -15,6 +15,7 @@ body {
 
 a { 
   color: #5E7894;
+  text-decoration: none;
   &:hover {
     color: #000;
   }
@@ -22,17 +23,20 @@ a {
 
 
 h1 { 
-  margin: 1em 10px 0 0px;
   padding: 0;
   letter-spacing: -3px;
   color: #000;
-  font-size: 2em;
+  font-size: 4em;
+  font-weight: bold;
+  a {
+    display: block;
+  }
 }
 
 /* Layout ------------------------------------------------------------------*/
 .container {
   @include container;
-  @include susy-grid-background;
+  //@include susy-grid-background;
   width:100%;
 }
 
@@ -41,6 +45,12 @@ h1 {
 
   .nav { 
     @include horizontal-list;
+    margin: 10px 0px;
+    font-weight: bold;
+    font-size: 1.5em;
+    li { 
+      padding-right: 30px;
+    }
   }
 }
 
@@ -52,7 +62,7 @@ h1 {
   letter-spacing: -1px;
   background-color: #D0E4FA;
   border-top: 2px solid #fff;
-  padding: .5em 10px;
+  padding: .5em 0px .5em 10px;
   font-size: 1.25em;
   font-weight: bold;
   font-size: 2.2em;
@@ -77,13 +87,14 @@ h1 {
     margin-left: 10px;
     letter-spacing: -2px;
     font-size: 110%;
-    color: #fff;
+    color: grey;
   }
 
   a {
     float: right;
-    text-decoration: none;
     font-size: 130%;
     font-family: Arial black;
+    letter-spacing: -5px;
+    padding-right: 10px;
   }
 }

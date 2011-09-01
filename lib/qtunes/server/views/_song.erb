@@ -7,7 +7,7 @@
   <span class="album"><%= song['album'] %></span>
   <% if not defined?(current) %>
     <% if queue[song['id']] %>
-      <a href="/remove/<%= song['id'] %>" title="remove from queue">-</a>
+      <a href="/remove/<%= song['id'] %>" title="remove from queue">--</a>
     <% else %>
       <a href="/add/<%= song['id'] %>" title="add to queue">+</a>
     <% end %>
