@@ -2,17 +2,14 @@
   klasses = %w(song).tap{|a| a << 'current' if defined?(current) }
 %>
 <div class="<%= klasses.join(' ') %>">
-  <% if not defined?(current) %>
-    <span class="controls">
-      <% if queue[song['id']] %>
-        <a href="/remove/<%= song['id'] %>" title="remove from queue">-</a>
-      <% else %>
-        <a href="/add/<%= song['id'] %>" title="add to queue">+</a>
-      <% end %>
-    </span>
-  <% end %>
-
   <span class="artist"><%= song['artist'] && !song['artist'].empty? ? song['artist'] : song['path'] %></span>
   <span class="title"><%= song['title'] %></span>
   <span class="album"><%= song['album'] %></span>
+  <% if not defined?(current) %>
+    <% if queue[song['id']] %>
+      <a href="/remove/<%= song['id'] %>" title="remove from queue">-</a>
+    <% else %>
+      <a href="/add/<%= song['id'] %>" title="add to queue">+</a>
+    <% end %>
+  <% end %>
 </div>

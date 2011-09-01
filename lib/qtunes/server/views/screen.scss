@@ -2,14 +2,47 @@
 
 @import "base";
 @import "compass/reset";
+@import "compass/typography/lists/horizontal-list";
 
-/* Layout ------------------------------------------------------------------*/
 
-.container {
-  @include container;
-  @include susy-grid-background;
+html { 
+  font-family: Helmet, Freesans, sans-serif;
 }
 
 body { 
-  color: red
+  color: #5E7894;
+}
+
+h1 { 
+  margin: 1em 10px 0 0px;
+  padding: 0;
+  letter-spacing: -3px;
+  color: #000;
+  font-size: 2em;
+}
+
+/* Layout ------------------------------------------------------------------*/
+.container {
+  @include container;
+  @include susy-grid-background;
+  width:100%;
+}
+
+.header { 
+  @include full;
+
+  .nav { 
+    @include horizontal-list;
+  }
+}
+
+.main { 
+  @include full;
+}
+
+.song {
+  font-size: 2em;
+  .controls { 
+    //float:right
+  }
 }

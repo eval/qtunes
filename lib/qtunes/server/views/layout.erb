@@ -6,20 +6,30 @@
 </head>
 
 <body>
-  <h1><a href='/'>Qtunes</a></h1>
+  <div class='container'>
+    <div class='header'>
+      <h1><a href='/'>Qtunes</a></h1>
 
-  <div class="navigation">
-    <a href="/">Queue (<%= queue.size %>)</a>
-    <a href="/library">Library</a>
+      <ul class="nav">
+        <li>
+          <a href="/">Queue (<%= queue.size %>)</a>
+        </li>
+        <li>
+          <a href="/library">Library</a>
+        </li>
+      </ul>
+    </div>
+
+    <% if flash[:notice] %>
+      <p class="notice"><%= flash[:notice] %></p>
+    <% end %>
+    <% if flash[:error] %>
+      <p class="error"><%= flash[:error] %></p>
+    <% end %>
+
+    <div class='main'>
+      <%= yield %>
+    </div>
   </div>
-
-  <% if flash[:notice] %>
-    <p class="notice"><%= flash[:notice] %></p>
-  <% end %>
-  <% if flash[:error] %>
-    <p class="error"><%= flash[:error] %></p>
-  <% end %>
-
-  <%= yield %>
 </body>
 </html>
