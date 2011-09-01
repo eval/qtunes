@@ -80,9 +80,10 @@ module Qtunes
 
     def self.library_by_first_letter_of_artist
       @library_by_first_letter_of_artist ||= begin
-        library.values.inject({}) do |res,song| 
-          key = song['artist'] ? song['artist'][0,1].downcase : ''
-          (res[key] ||= []) << song
+        result = Hash.new{|h,k| h[k] = Array.new }
+        library.values.inject(result) do |res,song| 
+          key = song['artist'] ? string_to_ascii(song['artist']).downcase[0,1] : ''
+          res[key] << song
           res
         end
       end
@@ -103,6 +104,15 @@ module Qtunes
 
     def library
       self.class.library
+    end
+
+    def self.string_to_ascii(s)
+      require 'unicode'
+      Unicode::normalize_KD(s).gsub(/[^A-Za-z0-9\s_-]+/,'')
+    end
+
+    def string_to_ascii(s)
+      self.class.string_to_ascii(s)
     end
 
     helpers do

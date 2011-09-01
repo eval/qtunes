@@ -27,4 +27,5 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "thor", "~> 0.14.6"
   s.add_runtime_dependency "cocaine", "~> 0.2.0"
   s.add_runtime_dependency "ruby-audioinfo", "~> 0.1.7"
+  s.add_runtime_dependency "unicode", "~> 0.4.0"
 end
