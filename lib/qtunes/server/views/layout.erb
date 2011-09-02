@@ -20,14 +20,14 @@
       </ul>
     </div>
 
-    <% if flash[:notice] %>
-      <p class="notice"><%= flash[:notice] %></p>
-    <% end %>
-    <% if flash[:error] %>
-      <p class="error"><%= flash[:error] %></p>
-    <% end %>
-
     <div class='main'>
+      <% if flash[:notice] %>
+        <p class="flash notice"><%= flash[:notice] %></p>
+      <% end %>
+      <% if flash[:error] %>
+        <p class="flash error"><%= flash[:error] %></p>
+      <% end %>
+
       <%= yield %>
     </div>
   </div>
