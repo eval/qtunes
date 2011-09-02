@@ -19,8 +19,6 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_development_dependency "shotgun"
-  s.add_development_dependency "compass"
-  s.add_development_dependency "compass-susy-plugin"
 
   s.add_runtime_dependency "sinatra", "~> 1.2.6"
   s.add_runtime_dependency "rack-flash", "~> 0.1.2"
@@ -28,4 +26,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "cocaine", "~> 0.2.0"
   s.add_runtime_dependency "ruby-audioinfo", "~> 0.1.7"
   s.add_runtime_dependency "unicode", "~> 0.4.0"
+  s.add_runtime_dependency "compass", "~> 0.11.5"
+  s.add_runtime_dependency "compass-susy-plugin", "~> 0.9"
 end
