@@ -58,6 +58,15 @@ h1 {
   @include full;
 }
 
+.pagination {
+  a { 
+    font-size: 3em;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 0px 4px;
+  }
+}
+
 .song {
   letter-spacing: -1px;
   background-color: #D0E4FA;
